@@ -47,6 +47,6 @@ class SetStatusAction extends AbstractProfileAction
     {
         $statusResponse = MessageContextHelper::asStatusResponse($context->getOutboundContext());
 
-        $statusResponse->setStatus(new Status(new StatusCode($this->statusCode), $this->statusCode));
+        $statusResponse->setStatus(new Status(new StatusCode($this->statusCode), $this->statusMessage));
     }
 }
