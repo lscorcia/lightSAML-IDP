@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
 
 class SetStatusAction extends AbstractProfileAction
 {
-    /** @var string */
+    /** @var StatusCode */
     protected $statusCode;
 
     /** @var string */
@@ -32,7 +32,7 @@ class SetStatusAction extends AbstractProfileAction
      * @param string          $statusCode
      * @param string          $statusMessage
      */
-    public function __construct(LoggerInterface $logger, $statusCode = SamlConstants::STATUS_SUCCESS, $statusMessage = null)
+    public function __construct(LoggerInterface $logger, StatusCode $statusCode = new StatusCode(SamlConstants::STATUS_SUCCESS), $statusMessage = null)
     {
         parent::__construct($logger);
 

@@ -18,10 +18,32 @@ use LightSaml\Action\Profile\Outbound\Message\SendMessageAction;
 use LightSaml\Idp\Action\Profile\Outbound\Response\CreateResponseAction;
 use LightSaml\Idp\Action\Profile\Outbound\StatusResponse\SetStatusAction;
 use LightSaml\Builder\Action\Profile\AbstractProfileActionBuilder;
-use LightSaml\SamlConstants;
+use LightSaml\Model\Protocol\StatusCode;
 
 class SsoIdpResponseErrorActionBuilder extends AbstractProfileActionBuilder
 {
+    /** @var StatusCode */
+    protected $statusCode;
+
+    /**
+     * @param string $statusCode
+     */
+    public function setStatusCode(StatusCode $statusCode)
+    {
+        $this->statusCode = $statusCode;
+    }
+
+    /** @var string */
+    protected $statusMessage;
+
+    /**
+     * @param string $statusMessage
+     */
+    public function setStatusMessage($statusMessage)
+    {
+        $this->statusMessage = $statusMessage;
+    }
+
     /**
      * @return void
      */
@@ -41,7 +63,8 @@ class SsoIdpResponseErrorActionBuilder extends AbstractProfileActionBuilder
         ));
         $this->add(new SetStatusAction(
             $this->buildContainer->getSystemContainer()->getLogger(),
-            SamlConstants::STATUS_REQUESTER
+            $this->statusCode,
+            $this->statusMessage,
         ));
         $this->add(new ResolveEndpointSpAcsAction(
             $this->buildContainer->getSystemContainer()->getLogger(),
